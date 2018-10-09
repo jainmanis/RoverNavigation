@@ -14,5 +14,13 @@ namespace PlutoRoverNavigator.Controllers
         {
             return new RoverPosition();
         }
+
+        public string ExecuteCommand(char command)
+        {
+            if (command == 'F' || command == 'B' || command == 'L' || command == 'R')
+                return "command_valid_and_executed";
+            else
+                return "invalid_command";
+        }
     }
 }
