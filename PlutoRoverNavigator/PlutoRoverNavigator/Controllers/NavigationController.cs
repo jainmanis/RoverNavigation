@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlutoRoverNavigator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,9 +10,9 @@ namespace PlutoRoverNavigator.Controllers
 {
     public class NavigationController : ApiController
     {
-        public string GetPosition()
+        public RoverPosition GetPosition()
         {
-            return "Start";
+            return new RoverPosition();
         }
     }
 }

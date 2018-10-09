@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using PlutoRoverNavigator.Controllers;
+using PlutoRoverNavigator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,17 @@ namespace RoverTest
         public void GetPosition_ShouldReturnPosition()
         {
             var controller = new NavigationController();
-            string result = controller.GetPosition();
+            RoverPosition result = controller.GetPosition();
 
-            Assert.AreEqual("Start", result);
+            RoverPosition expected = new RoverPosition() {
+                xCoordinate = 0,
+                yCoordinate = 0,
+                Facing = 'N'
+            };
+
+            Assert.AreEqual(expected.xCoordinate, result.xCoordinate);
+            Assert.AreEqual(expected.yCoordinate, result.yCoordinate);
+            Assert.AreEqual(expected.Facing, result.Facing);
         }
     }
 }
