@@ -101,5 +101,53 @@ namespace RoverTest
             Assert.AreEqual(10, newPosition6.yCoordinate);
             Assert.AreEqual('E', newPosition6.Facing);
         }
+
+        [Test]
+        public void WhenLeftOrRightCommandSend_ReturnNewPosition()
+        {
+            var controller = new NavigationController();
+            RoverPosition currentPosition = new RoverPosition()
+            {
+                xCoordinate = 10,
+                yCoordinate = 10,
+                Facing = 'N'
+            };
+
+            //left command facing North
+            RoverPosition newPosition = controller.ExecuteCommand('L', currentPosition);
+
+            Assert.AreEqual(10, newPosition.xCoordinate);
+            Assert.AreEqual(10, newPosition.yCoordinate);
+            Assert.AreEqual('W', newPosition.Facing);
+
+            //right command facing south
+            currentPosition = new RoverPosition()
+            {
+                xCoordinate = 10,
+                yCoordinate = 10,
+                Facing = 'S'
+            };
+
+            RoverPosition newPosition2 = controller.ExecuteCommand('R', currentPosition);
+
+            Assert.AreEqual(10, newPosition2.xCoordinate);
+            Assert.AreEqual(10, newPosition2.yCoordinate);
+            Assert.AreEqual('W', newPosition2.Facing);
+
+            //right command facing north
+            currentPosition = new RoverPosition()
+            {
+                xCoordinate = 10,
+                yCoordinate = 10,
+                Facing = 'N'
+            };
+
+            RoverPosition newPosition3 = controller.ExecuteCommand('R', currentPosition);
+
+            Assert.AreEqual(10, newPosition3.xCoordinate);
+            Assert.AreEqual(10, newPosition3.yCoordinate);
+            Assert.AreEqual('E', newPosition3.Facing);
+
+        }
     }
 }

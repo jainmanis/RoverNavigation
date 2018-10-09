@@ -28,42 +28,54 @@ namespace PlutoRoverNavigator.Controllers
         {
             if (_validCommands.Contains(command))
             {
-                if (position.Facing == 'N')
+                switch (position.Facing)
                 {
-                    if (command == 'F')
-                        position.yCoordinate = position.yCoordinate + 1;
-                    else if (command == 'B')
-                        position.yCoordinate = position.yCoordinate - 1;
-                }
+                    case 'N':
+                        if (command == 'F')
+                            position.yCoordinate = position.yCoordinate + 1;
+                        else if (command == 'B')
+                            position.yCoordinate = position.yCoordinate - 1;
+                        else if (command == 'L')
+                            position.Facing = 'W';
+                        else if (command == 'R')
+                            position.Facing = 'E';
 
-                if (position.Facing == 'S')
-                {
-                    if (command == 'F')
-                        position.yCoordinate = position.yCoordinate - 1;
-                    else if (command == 'B')
-                        position.yCoordinate = position.yCoordinate + 1;
+                        break;
+                    case 'S':
+                        if (command == 'F')
+                            position.yCoordinate = position.yCoordinate - 1;
+                        else if (command == 'B')
+                            position.yCoordinate = position.yCoordinate + 1;
+                        else if (command == 'L')
+                            position.Facing = 'E';
+                        else if (command == 'R')
+                            position.Facing = 'W';
+                        break;
+                    case 'W':
+                        if (command == 'F')
+                            position.xCoordinate = position.xCoordinate - 1;
+                        else if (command == 'B')
+                            position.xCoordinate = position.xCoordinate + 1;
+                        else if (command == 'L')
+                            position.Facing = 'S';
+                        else if (command == 'R')
+                            position.Facing = 'N';
+                        break;
+                    case 'E':
+                        if (command == 'F')
+                            position.xCoordinate = position.xCoordinate + 1;
+                        else if (command == 'B')
+                            position.xCoordinate = position.xCoordinate - 1;
+                        else if (command == 'L')
+                            position.Facing = 'N';
+                        else if (command == 'R')
+                            position.Facing = 'S';
+                        break;
+                    default:
+                        break;
                 }
-
-                if (position.Facing == 'E')
-                {
-                    if (command == 'F')
-                        position.xCoordinate = position.xCoordinate + 1;
-                    else if (command == 'B')
-                        position.xCoordinate = position.xCoordinate - 1;
-                }
-
-                if (position.Facing == 'W')
-                {
-                    if (command == 'F')
-                        position.xCoordinate = position.xCoordinate - 1;
-                    else if (command == 'B')
-                        position.xCoordinate = position.xCoordinate + 1;
-                }
-
-                return position;
             }
-            else
-                return position;
+            return position;
         }
 
     }
