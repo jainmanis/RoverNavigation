@@ -54,8 +54,6 @@ namespace PlutoRoverNavigator.Controllers
                         default:
                             break;
                     }
-
-                    Wrapper.ApplyWrapperToPosition(position);
                 }
             }
             return position;

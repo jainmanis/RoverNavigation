@@ -1,8 +1,4 @@
 ﻿using PlutoRoverNavigator.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PlutoRoverNavigator.Utilities.Helper
 {
@@ -27,7 +23,7 @@ namespace PlutoRoverNavigator.Utilities.Helper
                 default:
                     break;
             }
-            return pos;
+            return Wrapper.ApplyWrapperToPosition(pos);
         }
 
         public static RoverPosition MoveBackward(RoverPosition pos)
@@ -49,7 +45,7 @@ namespace PlutoRoverNavigator.Utilities.Helper
                 default:
                     break;
             }
-            return pos;
+            return Wrapper.ApplyWrapperToPosition(pos);
         }
 
         public static RoverPosition TurnLeft(RoverPosition pos)

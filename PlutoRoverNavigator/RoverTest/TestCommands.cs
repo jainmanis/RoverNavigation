@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
 using PlutoRoverNavigator.Controllers;
 using PlutoRoverNavigator.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RoverTest
 {
@@ -16,8 +12,6 @@ namespace RoverTest
         public void WhenCommandSend_CheckIfValidAndExecuteCommand(
             [Values('F','A','B','C','L','R','D','G','X','Y','Z')] char inputCommand)
         {
-            //char inputCommand = 'F';
-
             var controller = new NavigationController();
             string output = controller.ExecuteCommand(inputCommand);
 
