@@ -71,5 +71,29 @@ namespace RoverTest
             Assert.AreEqual(expY, result.yCoordinate);
             Assert.AreEqual(expFacing, result.Facing);
         }
+
+        [Test]
+        [TestCase(10, 99, 'N', 'F', 10, 0, 'N')]
+        [TestCase(10, 0, 'N', 'B', 10, 99, 'N')]
+        [TestCase(0, 0, 'E', 'B', 99, 0, 'E')]
+        [TestCase(99, 0, 'E', 'F', 0, 0, 'E')]
+        [TestCase(99, 0, 'E', 'L', 99, 0, 'N')]
+        [TestCase(99, 99, 'S', 'R', 99, 99, 'W')]
+        public void WhenReachedEndOn100By100Grid_WrapToStart(int x, int y, char facing, char command, int expX, int expY, char expFacing)
+        {
+            var controller = new NavigationController();
+            RoverPosition currentPosition = new RoverPosition()
+            {
+                xCoordinate = x,
+                yCoordinate = y,
+                Facing = facing
+            };
+            RoverPosition result = controller.ExecuteCommand(command, currentPosition);
+
+            Assert.AreEqual(expX, result.xCoordinate);
+            Assert.AreEqual(expY, result.yCoordinate);
+            Assert.AreEqual(expFacing, result.Facing);
+        }
+
     }
 }

@@ -52,7 +52,21 @@ namespace PlutoRoverNavigator.Controllers
                     default:
                         break;
                 }
+
+                if (position.yCoordinate == 100)
+                    position.yCoordinate = 0;
+
+                if (position.yCoordinate == -1)
+                    position.yCoordinate = 99;
+
+                if (position.xCoordinate == -1)
+                    position.xCoordinate = 99;
+
+                if (position.xCoordinate == 100)
+                    position.xCoordinate = 0;
+
             }
+
             return position;
         }
     }
