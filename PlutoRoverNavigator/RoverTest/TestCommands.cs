@@ -45,7 +45,7 @@ namespace RoverTest
                 Facing = facing
             };
             
-            RoverPosition result = controller.ExecuteCommand(command, currentPosition);
+            RoverPosition result = controller.ExecuteCommand(command.ToString(), currentPosition);
 
             Assert.AreEqual(expX, result.xCoordinate);
             Assert.AreEqual(expY, result.yCoordinate);
@@ -65,7 +65,7 @@ namespace RoverTest
                 yCoordinate = y,
                 Facing = facing
             };
-            RoverPosition result = controller.ExecuteCommand(command, currentPosition);
+            RoverPosition result = controller.ExecuteCommand(command.ToString(), currentPosition);
 
             Assert.AreEqual(expX, result.xCoordinate);
             Assert.AreEqual(expY, result.yCoordinate);
@@ -80,6 +80,25 @@ namespace RoverTest
         [TestCase(99, 0, 'E', 'L', 99, 0, 'N')]
         [TestCase(99, 99, 'S', 'R', 99, 99, 'W')]
         public void WhenReachedEndOn100By100Grid_WrapToStart(int x, int y, char facing, char command, int expX, int expY, char expFacing)
+        {
+            var controller = new NavigationController();
+            RoverPosition currentPosition = new RoverPosition()
+            {
+                xCoordinate = x,
+                yCoordinate = y,
+                Facing = facing
+            };
+            RoverPosition result = controller.ExecuteCommand(command.ToString(), currentPosition);
+
+            Assert.AreEqual(expX, result.xCoordinate);
+            Assert.AreEqual(expY, result.yCoordinate);
+            Assert.AreEqual(expFacing, result.Facing);
+        }
+
+        [Test]
+        [TestCase(0, 0, 'N', "FFRFF", 2, 2, 'E')]
+        [TestCase(0, 0, 'W', "BBLFFLFF", 4, 98, 'E')]
+        public void WhenMultipleCommandsArePassed_ExecuteEachOneByOne(int x, int y, char facing, string command, int expX, int expY, char expFacing)
         {
             var controller = new NavigationController();
             RoverPosition currentPosition = new RoverPosition()

@@ -31,31 +31,33 @@ namespace PlutoRoverNavigator.Controllers
         /// <summary>
         /// Checks and execute command
         /// </summary>
-        public RoverPosition ExecuteCommand(char command, RoverPosition position)
+        public RoverPosition ExecuteCommand(string command, RoverPosition position)
         {
-            if (_validCommands.Contains(command))
+            foreach (var singleCommand in command)
             {
-                switch (command)
+                if (_validCommands.Contains(singleCommand))
                 {
-                    case 'F':
-                        position = CommandHelper.MoveForward(position);
-                        break;
-                    case 'B':
-                        position = CommandHelper.MoveBackward(position);
-                        break;
-                    case 'L':
-                        position = CommandHelper.TurnLeft(position);
-                        break;
-                    case 'R':
-                        position = CommandHelper.TurnRight(position);
-                        break;
-                    default:
-                        break;
+                    switch (singleCommand)
+                    {
+                        case 'F':
+                            position = CommandHelper.MoveForward(position);
+                            break;
+                        case 'B':
+                            position = CommandHelper.MoveBackward(position);
+                            break;
+                        case 'L':
+                            position = CommandHelper.TurnLeft(position);
+                            break;
+                        case 'R':
+                            position = CommandHelper.TurnRight(position);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Wrapper.ApplyWrapperToPosition(position);
                 }
-
-                Wrapper.ApplyWrapperToPosition(position);
             }
-
             return position;
         }
     }
