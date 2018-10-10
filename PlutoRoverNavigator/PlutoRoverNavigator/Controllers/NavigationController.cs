@@ -1,4 +1,5 @@
 ﻿using PlutoRoverNavigator.Models;
+using PlutoRoverNavigator.Utilities.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace PlutoRoverNavigator.Controllers
             return new RoverPosition();
         }
 
+        /// <summary>
+        /// Checks if command is valid or not
+        /// </summary>
         public string ExecuteCommand(char command)
         {
             if (_validCommands.Contains(command))
@@ -24,52 +28,26 @@ namespace PlutoRoverNavigator.Controllers
                 return "invalid_command";
         }
 
+        /// <summary>
+        /// Checks and execute command
+        /// </summary>
         public RoverPosition ExecuteCommand(char command, RoverPosition position)
         {
             if (_validCommands.Contains(command))
             {
-                switch (position.Facing)
+                switch (command)
                 {
-                    case 'N':
-                        if (command == 'F')
-                            position.yCoordinate = position.yCoordinate + 1;
-                        else if (command == 'B')
-                            position.yCoordinate = position.yCoordinate - 1;
-                        else if (command == 'L')
-                            position.Facing = 'W';
-                        else if (command == 'R')
-                            position.Facing = 'E';
-
+                    case 'F':
+                        position = CommandHelper.MoveForward(position);
                         break;
-                    case 'S':
-                        if (command == 'F')
-                            position.yCoordinate = position.yCoordinate - 1;
-                        else if (command == 'B')
-                            position.yCoordinate = position.yCoordinate + 1;
-                        else if (command == 'L')
-                            position.Facing = 'E';
-                        else if (command == 'R')
-                            position.Facing = 'W';
+                    case 'B':
+                        position = CommandHelper.MoveBackward(position);
                         break;
-                    case 'W':
-                        if (command == 'F')
-                            position.xCoordinate = position.xCoordinate - 1;
-                        else if (command == 'B')
-                            position.xCoordinate = position.xCoordinate + 1;
-                        else if (command == 'L')
-                            position.Facing = 'S';
-                        else if (command == 'R')
-                            position.Facing = 'N';
+                    case 'L':
+                        position = CommandHelper.TurnLeft(position);
                         break;
-                    case 'E':
-                        if (command == 'F')
-                            position.xCoordinate = position.xCoordinate + 1;
-                        else if (command == 'B')
-                            position.xCoordinate = position.xCoordinate - 1;
-                        else if (command == 'L')
-                            position.Facing = 'N';
-                        else if (command == 'R')
-                            position.Facing = 'S';
+                    case 'R':
+                        position = CommandHelper.TurnRight(position);
                         break;
                     default:
                         break;
@@ -77,6 +55,5 @@ namespace PlutoRoverNavigator.Controllers
             }
             return position;
         }
-
     }
 }

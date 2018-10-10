@@ -30,124 +30,46 @@ namespace RoverTest
         }
 
         [Test]
-        public void WhenForwardOrBackwardCommandSend_ReturnNewPosition()
+        [TestCase(10, 10, 'N', 'F', 10, 11, 'N')]
+        [TestCase(10, 10, 'N', 'X', 10, 10, 'N')]
+        [TestCase(10, 11, 'N', 'B', 10, 10, 'N')]
+        [TestCase(10, 10, 'S', 'F', 10, 9, 'S')]
+        [TestCase(10, 10, 'W', 'B', 11, 10, 'W')]
+        [TestCase(10, 10, 'E', 'F', 11, 10, 'E')]
+        public void WhenForwardOrBackwardCommandSend_ReturnNewPosition(int x, int y, char facing, char command, int expX, int expY, char expFacing)
         {
             var controller = new NavigationController();
             RoverPosition currentPosition = new RoverPosition() {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'N'
+                xCoordinate = x,
+                yCoordinate = y,
+                Facing = facing
             };
+            
+            RoverPosition result = controller.ExecuteCommand(command, currentPosition);
 
-            //Forward command facing North
-            RoverPosition newPosition = controller.ExecuteCommand('F', currentPosition);
-
-            Assert.AreEqual(10, newPosition.xCoordinate);
-            Assert.AreEqual(11, newPosition.yCoordinate);
-            Assert.AreEqual('N', newPosition.Facing);
-
-            //Invalid command
-            RoverPosition newPosition2 = controller.ExecuteCommand('X', newPosition);
-
-            Assert.AreEqual(10, newPosition2.xCoordinate);
-            Assert.AreEqual(11, newPosition2.yCoordinate);
-            Assert.AreEqual('N', newPosition2.Facing);
-
-            //Backward command facing north
-            RoverPosition newPosition3 = controller.ExecuteCommand('B', newPosition2);
-
-            Assert.AreEqual(10, newPosition3.xCoordinate);
-            Assert.AreEqual(10, newPosition3.yCoordinate);
-            Assert.AreEqual('N', newPosition3.Facing);
-
-
-            //Forward command facing South
-            currentPosition = new RoverPosition()
-            {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'S'
-            };
-            RoverPosition newPosition4 = controller.ExecuteCommand('F', currentPosition);
-
-            Assert.AreEqual(10, newPosition4.xCoordinate);
-            Assert.AreEqual(9, newPosition4.yCoordinate);
-            Assert.AreEqual('S', newPosition4.Facing);
-
-
-            //Backward command facing West
-            currentPosition = new RoverPosition()
-            {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'W'
-            };
-            RoverPosition newPosition5 = controller.ExecuteCommand('B', currentPosition);
-
-            Assert.AreEqual(11, newPosition5.xCoordinate);
-            Assert.AreEqual(10, newPosition5.yCoordinate);
-            Assert.AreEqual('W', newPosition5.Facing);
-
-            //Forward command facing East
-            currentPosition = new RoverPosition()
-            {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'E'
-            };
-            RoverPosition newPosition6 = controller.ExecuteCommand('F', currentPosition);
-
-            Assert.AreEqual(11, newPosition6.xCoordinate);
-            Assert.AreEqual(10, newPosition6.yCoordinate);
-            Assert.AreEqual('E', newPosition6.Facing);
+            Assert.AreEqual(expX, result.xCoordinate);
+            Assert.AreEqual(expY, result.yCoordinate);
+            Assert.AreEqual(expFacing, result.Facing);
         }
 
         [Test]
-        public void WhenLeftOrRightCommandSend_ReturnNewPosition()
+        [TestCase(10,10,'N', 'L', 10,10,'W')]
+        [TestCase(10, 10, 'S', 'R', 10, 10, 'W')]
+        [TestCase(10, 10, 'N', 'R', 10, 10, 'E')]
+        public void WhenLeftOrRightCommandSend_ReturnNewPosition(int x, int y, char facing, char command, int expX, int expY, char expFacing)
         {
             var controller = new NavigationController();
             RoverPosition currentPosition = new RoverPosition()
             {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'N'
+                xCoordinate = x,
+                yCoordinate = y,
+                Facing = facing
             };
+            RoverPosition result = controller.ExecuteCommand(command, currentPosition);
 
-            //left command facing North
-            RoverPosition newPosition = controller.ExecuteCommand('L', currentPosition);
-
-            Assert.AreEqual(10, newPosition.xCoordinate);
-            Assert.AreEqual(10, newPosition.yCoordinate);
-            Assert.AreEqual('W', newPosition.Facing);
-
-            //right command facing south
-            currentPosition = new RoverPosition()
-            {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'S'
-            };
-
-            RoverPosition newPosition2 = controller.ExecuteCommand('R', currentPosition);
-
-            Assert.AreEqual(10, newPosition2.xCoordinate);
-            Assert.AreEqual(10, newPosition2.yCoordinate);
-            Assert.AreEqual('W', newPosition2.Facing);
-
-            //right command facing north
-            currentPosition = new RoverPosition()
-            {
-                xCoordinate = 10,
-                yCoordinate = 10,
-                Facing = 'N'
-            };
-
-            RoverPosition newPosition3 = controller.ExecuteCommand('R', currentPosition);
-
-            Assert.AreEqual(10, newPosition3.xCoordinate);
-            Assert.AreEqual(10, newPosition3.yCoordinate);
-            Assert.AreEqual('E', newPosition3.Facing);
-
+            Assert.AreEqual(expX, result.xCoordinate);
+            Assert.AreEqual(expY, result.yCoordinate);
+            Assert.AreEqual(expFacing, result.Facing);
         }
     }
 }
