@@ -2,9 +2,6 @@
 using PlutoRoverNavigator.Utilities.Helper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace PlutoRoverNavigator.Controllers
@@ -31,8 +28,10 @@ namespace PlutoRoverNavigator.Controllers
         /// <summary>
         /// Checks and execute command
         /// </summary>
-        public RoverPosition ExecuteCommand(string command, RoverPosition position)
+        public RoverPosition ExecuteCommand(string command, RoverPosition position, List<Tuple<int, int>> Obstacles = null)
         {
+            Obstacles = Obstacles ?? new List<Tuple<int, int>>();
+
             foreach (var singleCommand in command)
             {
                 if (_validCommands.Contains(singleCommand))
@@ -40,10 +39,10 @@ namespace PlutoRoverNavigator.Controllers
                     switch (singleCommand)
                     {
                         case 'F':
-                            position = CommandHelper.MoveForward(position);
+                            position = CommandHelper.MoveForward(position, Obstacles);
                             break;
                         case 'B':
-                            position = CommandHelper.MoveBackward(position);
+                            position = CommandHelper.MoveBackward(position, Obstacles);
                             break;
                         case 'L':
                             position = CommandHelper.TurnLeft(position);
@@ -54,6 +53,10 @@ namespace PlutoRoverNavigator.Controllers
                         default:
                             break;
                     }
+
+                    //stop executing command if obstacle detected
+                    if (position.ObstaclePresent)
+                        break;
                 }
             }
             return position;
